@@ -1,0 +1,149 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  /* Container */
+  .listing-card {
+    max-width: 1100px;
+    margin: 30px auto;
+    display: flex;
+    border-radius: 14px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+
+  .listing-image {
+    width: 55%;
+    object-fit: cover;
+    border-radius: 14px;
+    
+  }
+
+  .listing-content {
+    padding: 20px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 14px;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  /* 🔥 Responsive Fix */
+  @media (max-width: 768px) {
+    .listing-card {
+      flex-direction: column;
+    }
+
+    .listing-image {
+      width: 100%;
+      margin: 0;
+      border-radius: 0;
+      height: 240px;
+    }
+
+    .listing-content {
+      width: 100%;
+    }
+
+    .actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .action-buttons {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .action-buttons a,
+    .action-buttons button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+<h2 class="mt-3">Listing Details</h2>
+<div class="listing-card">
+
+  <!-- Image -->
+  <img 
+    src="<%= listing.image.url %>"
+    alt="Listing Image"
+    class="listing-image"
+  />
+
+  <!-- Content -->
+  <div class="listing-content">
+
+    <div>
+      <h2 style="margin-bottom: 10px; font-size: 30px;">
+        <%= listing.title %>
+      </h2>
+
+      <p style="font-size: 14px; color: #555; line-height: 1.6;">
+        <%= listing.description %>
+      </p>
+
+      <p><strong>📍 Location:</strong> <%= listing.location %></p>
+      <p><strong>🌍 Country:</strong> <%= listing.country %></p>
+    </div>
+
+    <!-- Price & Actions -->
+    <div class="actions">
+
+      <span style="
+        font-size: 18px;
+        font-weight: bold;
+        color: #e63946;
+      ">
+        ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+      </span>
+
+      <div class="action-buttons">
+
+        <a href="/listings/<%= listing._id %>/edit" style="
+          padding: 10px 16px;
+          background-color: #0077ff;
+          color: white;
+          border-radius: 8px;
+          text-decoration: none;
+          font-size: 14px;
+        ">
+          Edit
+        </a>
+
+        <form 
+          action="/listings/<%= listing._id %>?_method=DELETE" 
+          method="POST"
+          style="margin: 0;"
+        >
+          <button type="submit" style="
+            padding: 10px 16px;
+            background-color: #e63946;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+          ">
+            Delete
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container">
+  <div class="row">
+    <h3 class="all-listing mb-4">All Listings</h3>
+
+    <div class="row listings-row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+      <% allListings.forEach(listing => { %>
+
+        <div class="col">
+          <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="card h-100">
+
+              <!-- Image -->
+              <img 
+                src="<%= listing.image.url %>" 
+                class="card-img-top"
+                alt="listing image"
+                style="height: 20rem; object-fit: cover;"
+              >
+
+              <!-- Hover Overlay -->
+              <div class="card-img-overlay">
+                View Details
+              </div>
+
+              <!-- Card Body -->
+              <div class="card-body">
+                <p class="card-text">
+                  <b><%= listing.title %></b><br>
+                  ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+                </p>
+              </div>
+
+            </div>
+          </a>
+        </div>
+
+      <% }) %>
+    </div>
+  </div>
+</div>
