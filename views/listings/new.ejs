@@ -2,45 +2,56 @@
 <div class="row">
   <div class="col-8 offset-2">
 <h3 class="mb-3" style="margin-top:1rem; color: black;">Create New Listing</h3>
-<form action="/listings" method="POST">
+<form action="/listings" method="POST" novalidate class="needs-validation">
 
   <div class="mb-3">
     <label for="title" action="/listings" class="form-label">Title</label>
-    <input name="listing[title]" class="form-control">
+    <input name="listing[title]" class="form-control" type="text" required>
+    <div class="invalid-feedback">Enter valid title</div>
+    <div class="valid-feedback">Title looks Good!</div>
   </div>
 
   <div class="mb-3">
     <label for="description" action="/listings" class="form-label">Description</label>
-    <textarea name="listing[description]" class="form-control"></textarea>
+    <textarea name="listing[description]" class="form-control" required></textarea>
+    <div class="invalid-feedback">Enter valid description</div>
+    <div class="valid-feedback">Valid</div>
   </div>
 
   <div class="mb-3">
     <label for="image" action="/listings" class="form-label">Image Link</label>
     <input name="listing[image][url]" class="form-control">
+    
   </div>
 
   <div class="row"> 
       <div class="mb-3 col-md-4">
         <label for="price" action="/listings" class="form-label">Price</label>
-        <input name="listing[price]" type="number" class="form-control" >
+        <input name="listing[price]" class="form-control" required>
+        <div class="invalid-feedback">Enter valid Price</div>
+        <div class="valid-feedback">Valid</div>
       </div>
 
 
       <div class="mb-3 col-md-8">
             <label for="country" action="/listings" class="form-label">Country</label>
-            <input name="listing[country]" class="form-control">
+            <input name="listing[country]" class="form-control" required>
+            <div class="invalid-feedback">Enter valid country</div>
+            <div class="valid-feedback">Valid</div>
       </div>
   </div>
 
   <div class="mb-3">
     <label for="location" action="/listings" class="form-label">Location</label>
-    <input name="listing[location]" class="form-control">
+    <input name="listing[location]" class="form-control" required>
+    <div class="invalid-feedback">Enter valid location</div>
+    <div class="valid-feedback">Valid</div>
   </div>
- 
 
-
-  
   <button class="btn btn-dark add-btn">Add</button>
 </form>
 </div>
 </div>
+
+
+<script src="/js/script.js"></script>
