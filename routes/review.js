@@ -25,7 +25,8 @@ router.post(
   wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
     if (!listing) {
-      throw new ExpressError(404, "Listing not found");
+      req.flash("error", "Listing not found!");
+      return res.redirect("/listings");
     }
 
     const newReview = new Reviews(req.body.review);
@@ -34,6 +35,7 @@ router.post(
     await newReview.save();
     await listing.save();
 
+    req.flash("success", "New Review Created!"); // Success Flash
     res.redirect(`/listings/${listing._id}`);
   })
 );
@@ -44,19 +46,22 @@ router.delete(
   wrapAsync(async (req, res) => {
     const { id, reviewId } = req.params;
 
+    // Remove review reference from Listing
     const listing = await Listing.findByIdAndUpdate(
       id,
-      { $pull: { reviews: reviewId } },
-      { new: true }
+      { $pull: { reviews: reviewId } }
     );
 
     if (!listing) {
-      throw new ExpressError(404, "Listing not found");
+      req.flash("error", "Listing not found!");
+      return res.redirect("/listings");
     }
 
+    // Delete the actual review document
     await Reviews.findByIdAndDelete(reviewId);
 
-    res.redirect(`/listings/${listing._id}`);
+    req.flash("success", "Review Deleted!"); // Success Flash
+    res.redirect(`/listings/${id}`);
   })
 );
 
