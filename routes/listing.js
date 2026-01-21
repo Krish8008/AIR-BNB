@@ -4,6 +4,7 @@ const Listing = require("../models/listing.js");
 const wrapAsync = require("../utilities/wrapAsync.js");
 const ExpressError = require("../utilities/expressError.js");
 const { listingSchema } = require("../schema.js");
+const isLoggedIn = require("../middleware.js");
 
 
 /* ---------------- JOI VALIDATION ---------------- */
@@ -26,6 +27,7 @@ router.get("/", wrapAsync(async (req, res) => {
 
 // NEW
 router.get("/new", (req, res) => {
+    req.isLoggedIn
     res.render("listings/new.ejs");
 });
 

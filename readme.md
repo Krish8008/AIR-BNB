@@ -8,6 +8,3 @@ push code on git-
 populate() is a Mongoose method used to:
 Replace ObjectId(s) with actual document data
 
-
-
-
