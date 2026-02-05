@@ -6,6 +6,8 @@ const User = require("../models/user.js");
 const wrapAsync = require("../utilities/wrapAsync.js");
 const passport = require("passport");
 const { Strategy } = require("passport-local");
+const { saveRedirectUrl } = require("../middleware.js");
+
 
 
 
@@ -50,14 +52,19 @@ router.get("/login", (req, res) => {
      res.render("users/login.ejs");
 })
 
-router.post("/login", 
+router.post(
+  "/login",
+  saveRedirectUrl,
   passport.authenticate("local", {
-      failureRedirect: "/login",
-      failureFlash: true,
-}), 
-async (req, res) => {
-  res.send("Welcome to wonderlust, you are loged in!")
-})
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  async (req, res) => {
+   let url = res.locals.redirectUrl || "/listings"
+    res.redirect(url);
+  }
+);
+
 
 
 router.get("/logout", (req, res, next) => {

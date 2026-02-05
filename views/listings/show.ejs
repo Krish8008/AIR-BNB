@@ -61,6 +61,7 @@
   <div class="listing-content">
     <div>
       <h2><%= listing.title %></h2>
+      <p>Owned By : <%= listing.owner.username %></p>
       <p><%= listing.description %></p>
       <p><strong>📍 Location:</strong> <%= listing.location %></p>
       <p><strong>🌍 Country:</strong> <%= listing.country %></p>
@@ -71,13 +72,33 @@
         ₹ <%= listing.price.toLocaleString("en-IN") %> / night
       </span>
 
-      <div class="action-buttons">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">Edit</a>
 
-        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-          <button class="btn btn-danger">Delete</button>
-        </form>
-      </div>
+<% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+  <div class="action-buttons">
+
+    <!-- EDIT BUTTON -->
+    <a 
+      href="/listings/<%= listing._id %>/edit" 
+      class="btn btn-primary"
+    >
+      Edit
+    </a>
+
+    <!-- DELETE BUTTON -->
+    <form 
+      action="/listings/<%= listing._id %>?_method=DELETE" 
+      method="POST" 
+      style="display:inline;"
+    >
+      <button class="btn btn-danger">
+        Delete
+      </button>
+    </form>
+
+  </div>
+<% } %>
+
+
     </div>
   </div>
 </div>

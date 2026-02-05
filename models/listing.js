@@ -3,6 +3,7 @@ const { listingSchema } = require("../schema");
 const Schema = mongoose.Schema;
 const Review = require("./reviews.js");
 
+
 const ListingSchema = new Schema({
   title: { type: String, required: true },
   description: String,
@@ -28,7 +29,11 @@ const ListingSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Review"
     }
-  ]
+  ],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 
