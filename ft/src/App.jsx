@@ -1,25 +1,43 @@
-import { useState, useEffect  } from 'react'
 import './App.css'
 import Navbar from './Navbar/Navabar'
 import ListingCard from './Listings/index'
 import Footer from './Navbar/Footer/Footer'
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import AddListing from './Listings/addListing'
 
-function App() {
-  
-  
-
+/* Layout Component */
+function Layout() {
   return (
     <>
-      <Navbar/>
-      <div className="max-w-7xl mx-auto px-6 mt-8"></div>
-      <div className="flex gap-8 flex-wrap">
-      
-          <ListingCard />
-        </div>
-
-      <Footer/>
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-6 mt-8 min-h-screen">
+        <Outlet />
+      </div>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <ListingCard />
+        },
+        {
+          path: "/add",
+          element: <AddListing />
+        }
+      ]
+    }
+  ]);
+
+  return <RouterProvider router={router} />;
+}
+
+export default App;

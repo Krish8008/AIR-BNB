@@ -12,53 +12,47 @@ function ListingCard() {
       .catch((err) => console.log(err));
   }, []);
 
-  return (
-    <div className="flex flex-wrap gap-6">
-      {listings.map((listing) => (
-        <div key={listing._id} className="w-72 cursor-pointer">
+ return (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-8 justify-items-center">
+    {listings.map((listing) => (
+      <div key={listing._id} className="w-72 cursor-pointer">
 
-          {/* Image */}
-          <div className="relative">
-            <img
-              src={listing.image?.url}
-              alt="listing"
-              className="w-full h-72 object-cover rounded-xl"
-            />
+        <div className="relative">
+          <img
+            src={listing.image?.url}
+            alt="listing"
+            className="w-full h-72 object-cover rounded-xl"
+          />
 
-            {/* Heart Icon */}
-            <span className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md">
-              ❤️
+          <span className="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md">
+            ❤️
+          </span>
+        </div>
+
+        <div className="mt-3 space-y-1">
+          <div className="flex justify-between items-center">
+            <h3 className="font-semibold text-gray-900">
+              {listing.title}
+            </h3>
+
+            <span className="flex items-center gap-1 text-sm">
+              ⭐ {listing.rating || "4.5"}
             </span>
           </div>
 
-          {/* Details */}
-          <div className="mt-3 space-y-1">
-            <div className="flex justify-between items-center">
-              <h3 className="font-semibold text-gray-900">
-                {listing.location}
-              </h3>
+          <p className="text-gray-500 text-sm">
+            {listing.description}
+          </p>
 
-              <span className="flex items-center gap-1 text-sm">
-                ⭐ {listing.reviews?.rating || "4.5"}
-              </span>
-            </div>
-
-            <p className="text-gray-500 text-sm">
-              2 nights · 1 bedroom
-            </p>
-
-            <p className="mt-1">
-              <span className="font-semibold">
-                ₹{listing.price}
-              </span>{" "}
-              night
-            </p>
-          </div>
-
+          <p className="mt-1">
+            <span className="font-semibold">₹{listing.price}</span> night
+          </p>
         </div>
-      ))}
-    </div>
-  );
+
+      </div>
+    ))}
+  </div>
+);
 }
 
 export default ListingCard;

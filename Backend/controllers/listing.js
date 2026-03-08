@@ -1,6 +1,7 @@
 const Listing = require("../models/listing");
 
 
+
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     //res.render("listings/index.ejs", { allListings });
@@ -13,11 +14,27 @@ module.exports.addNewListing = (req, res) => {
 };
 
 module.exports.createNewListing = async (req, res) => {
-    const newListing = new Listing(req.body.listing);
-    newListing.owner = req.user._id;
-    await newListing.save();
-    req.flash("success", "Successfully made a new listing!"); // Flash added
-    res.redirect("/listings");
+    // const newListing = new Listing(req.body.listing);
+    // newListing.owner = req.user._id;
+    // await newListing.save();
+    // req.flash("success", "Successfully made a new listing!"); // Flash added
+    // res.redirect("/listings");
+
+
+    app.post("/listings", async (req, res) => {
+
+    const data = req.body;
+
+    console.log("Received:", data);
+    await data.save();
+
+    res.send({
+        message: "Listing received",
+        listing: data
+    });
+
+});
+
 };
 
 module.exports.showListing = async (req, res) => {

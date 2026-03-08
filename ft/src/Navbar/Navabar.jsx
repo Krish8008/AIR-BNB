@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
-  // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -21,35 +21,35 @@ function Navbar() {
     <nav className="bg-white shadow-md px-6 py-4 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
 
-        {/* LEFT - Logo */}
-        <div className="text-2xl text-rose-500 font-bold cursor-pointer">
+        {/* Logo */}
+        <Link to="/" className="text-2xl text-rose-500 font-bold">
           airbnb
-        </div>
+        </Link>
 
-        {/* MIDDLE - Search Bar */}
+        {/* Search */}
         <div className="hidden md:flex flex-1 justify-center px-8">
-          <div className="flex items-center border rounded-full px-4 py-2 w-full max-w-md shadow-sm hover:shadow-md transition">
-            <input
-              type="text"
-              placeholder="Search listings..."
-              className="flex-1 outline-none text-sm"
-            />
-            <button className="bg-rose-500 text-white px-4 py-1 rounded-full text-sm">
-              Search
-            </button>
-          </div>
-        </div>
+  <div className="flex items-center border rounded-full px-4 py-2 w-full max-w-md shadow-sm hover:shadow-md transition">
+    <input
+      type="text"
+      placeholder="Search listings..."
+      className="flex-1 outline-none text-sm bg-transparent"
+    />
+    <button className="bg-rose-500 text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-rose-600 transition">
+      Search
+    </button>
+  </div>
+</div>
 
-        {/* RIGHT SECTION */}
+        {/* Right Section */}
         <div className="flex items-center gap-6 text-sm font-medium">
 
-          <span className="cursor-pointer hover:text-rose-500 transition">
+          <Link to="/" className="hover:text-rose-500">
             All Listings
-          </span>
+          </Link>
 
-          <span className="cursor-pointer hover:text-rose-500 transition">
+          <Link to="/add" className="hover:text-rose-500">
             Add Listing
-          </span>
+          </Link>
 
           {/* Profile */}
           <div className="relative" ref={menuRef}>
@@ -80,7 +80,6 @@ function Navbar() {
           </div>
 
         </div>
-
       </div>
     </nav>
   );
