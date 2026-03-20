@@ -14,12 +14,20 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const ExpressError = require("./utilities/expressError.js");
 const cors = require("cors");
-app.use(cors());
+
+const corsOption = {
+  origin: "http://localhost:5175",
+  method: "GET, POST, DELETE, PUT, DELETE, PATCH, HEAD",
+  credential: true,
+} 
+
+app.use(cors(corsOption));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
 
 /* ---------------- DATABASE ---------------- */
 mongoose.connect(MONGO_URL)
@@ -74,6 +82,7 @@ app.use((req, res, next) => {
 // Root
 app.get("/", (req, res) => {
   res.redirect("/listings")
+  
 });
 
 // Demo user (TEST ROUTE)

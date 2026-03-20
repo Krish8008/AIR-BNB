@@ -4,6 +4,7 @@ import ListingCard from './Listings/index'
 import Footer from './Navbar/Footer/Footer'
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import AddListing from './Listings/addListing'
+import { NavLink } from 'react-router-dom';
 
 /* Layout Component */
 function Layout() {
