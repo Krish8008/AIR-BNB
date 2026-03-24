@@ -1,3 +1,4 @@
+const listing = require("../models/listing");
 const Listing = require("../models/listing");
 
 
@@ -5,7 +6,7 @@ const Listing = require("../models/listing");
 module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     //res.render("listings/index.ejs", { allListings });
-    res.json(allListings); 
+    res.json(allListings);
 };
 
 module.exports.addNewListing = (req, res) => {
@@ -14,37 +15,57 @@ module.exports.addNewListing = (req, res) => {
 };
 
 module.exports.createNewListing = async (req, res) => {
-    // const newListing = new Listing(req.body.listing);
-    // newListing.owner = req.user._id;
-    // await newListing.save();
-    // req.flash("success", "Successfully made a new listing!"); // Flash added
-    // res.redirect("/listings");
+  try {
+    const listingData = req.body.listing;
 
+    if (!listingData) {
+      return res.status(400).json({ message: "Listing data is required." });
+    }
 
-    app.post("/listings", async (req, res) => {
+    // Frontend sends image as a plain URL string.
+    // Schema expects image: { url, filename } — so reshape it here.
+    if (listingData.image && typeof listingData.image === "string") {
+      listingData.image = {
+        url: listingData.image,
+        filename: "listingimage", // default filename
+      };
+    }
 
-    const data = req.body;
+    const newListing = new Listing(listingData);
+    // newListing.owner = req.user._id; // uncomment when auth is ready
 
-    console.log("Received:", data);
-    await data.save();
+    await newListing.save();
 
-    res.send({
-        message: "Listing received",
-        listing: data
+    res.status(201).json({
+      message: "Listing created successfully!",
+      listing: newListing,
     });
 
-});
-
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    res.status(500).json({ message: err.message || "Internal server error." });
+  }
 };
 
+
+
 module.exports.showListing = async (req, res) => {
-    const listing = await Listing.findById(req.params.id).populate("reviews").populate("owner");
+    // const listing = await Listing.findById(req.params.id).populate("reviews").populate("owner");
+    // if (!listing) {
+    //     req.flash("error", "Listing you requested does not exist!"); // Error flash
+    //     return res.redirect("/listings");
+    // }
+    // console.log(listing);
+    // res.render("listings/show.ejs", { listing });
+
+    const listing = await Listing.findById(req.params.id);
+
     if (!listing) {
-        req.flash("error", "Listing you requested does not exist!"); // Error flash
-        return res.redirect("/listings");
+      return res.status(404).json({ message: "Listing not found" });
     }
-    console.log(listing);
-    res.render("listings/show.ejs", { listing });
+
+    res.json(listing);
+    console.log(listing)
     
 
 };

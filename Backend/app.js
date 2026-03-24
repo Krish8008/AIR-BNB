@@ -15,13 +15,13 @@ const User = require("./models/user.js");
 const ExpressError = require("./utilities/expressError.js");
 const cors = require("cors");
 
-const corsOption = {
-  origin: "http://localhost:5175",
-  method: "GET, POST, DELETE, PUT, DELETE, PATCH, HEAD",
-  credential: true,
-} 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true, // ⭐ MOST IMPORTANT
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD"],
+};
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

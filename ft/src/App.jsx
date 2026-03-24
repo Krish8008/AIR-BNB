@@ -1,10 +1,14 @@
 import './App.css'
 import Navbar from './Navbar/Navabar'
-import ListingCard from './Listings/index'
+import ListingCard from './Pages/index'
 import Footer from './Navbar/Footer/Footer'
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import AddListing from './Listings/addListing'
+import AddListing from './Pages/AddListing'
 import { NavLink } from 'react-router-dom';
+import LoginPage from './Pages/Login';
+import SignupPage from './Pages/Signup';
+import ListingDetails from './Pages/ListingDetails';
+import { AuthProvider } from "./AuthContext";
 
 /* Layout Component */
 function Layout() {
@@ -19,6 +23,7 @@ function Layout() {
   );
 }
 
+
 function App() {
 
   const router = createBrowserRouter([
@@ -26,19 +31,20 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "/",
-          element: <ListingCard />
-        },
-        {
-          path: "/add",
-          element: <AddListing />
-        }
+        { path: "/", element: <ListingCard /> },
+        { path: "/add", element: <AddListing /> },
+        { path: "/login", element: <LoginPage /> },
+        { path: "/signup", element: <SignupPage /> },
+        { path: "/listing/:id", element: <ListingDetails /> }
       ]
     }
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;
